@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,6 +8,8 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Modal,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -21,18 +23,27 @@ import { Fontisto } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 const wd = Dimensions.get("window").width;
+// const ht = Platform.OS === 'android' ? Dimensions.get('screen').height - StatusBar.currentHeight : Dimensions.get('window').height;
 const ht = Dimensions.get("window").height;
-const ft = Dimensions.get("window").fontScale;
+// const ft = Dimensions.get("window").fontScale;
 
 function Home() {
+  const [modalVisible, setModalVisible] = useState(false);
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.container}
+      onPress={() => {
+        setModalVisible(!modalVisible);
+      }}
+    >
       <StatusBar barStyle="light-content" backgroundColor="#5C249A" />
       {/* Header Starts */}
       <View style={styles.header}>
-        <View>
-          <Image style={styles.img} source={require("../assets/pic.jpeg")} />
-        </View>
+        <TouchableOpacity>
+          <View>
+            <Image style={styles.img} source={require("../assets/pic.jpeg")} />
+          </View>
+        </TouchableOpacity>
         <View style={{ justifyContent: "center", marginLeft: wd * 0.03 }}>
           <Text
             style={{ color: "white", opacity: 0.85, fontSize: ht * 0.0145 }}
@@ -43,9 +54,11 @@ function Home() {
             <View>
               <Text style={{ color: "white" }}>Hyderabad</Text>
             </View>
-            <View style={{ marginLeft: wd * 0.015 }}>
-              <Ionicons name="md-arrow-dropdown" size={24} color="white" />
-            </View>
+            <TouchableOpacity>
+              <View style={{ marginLeft: wd * 0.015 }}>
+                <Ionicons name="md-arrow-dropdown" size={24} color="white" />
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
         <View
@@ -56,20 +69,25 @@ function Home() {
             top: ht * 0.017,
           }}
         >
-          <View style={{ marginRight: wd * 0.04 }}>
-            <MaterialCommunityIcons
-              name="qrcode-scan"
-              size={27}
-              color="white"
-            />
-          </View>
-
-          <View style={{ marginRight: wd * 0.04 }}>
-            <FontAwesome name="bell" size={27} color="white" />
-          </View>
-          <View style={{ marginRight: wd * 0.04 }}>
-            <FontAwesome5 name="question-circle" size={27} color="white" />
-          </View>
+          <TouchableOpacity>
+            <View style={{ marginRight: wd * 0.04 }}>
+              <MaterialCommunityIcons
+                name="qrcode-scan"
+                size={27}
+                color="white"
+              />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={{ marginRight: wd * 0.04 }}>
+              <FontAwesome name="bell" size={27} color="white" />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={{ marginRight: wd * 0.04 }}>
+              <FontAwesome5 name="question-circle" size={27} color="white" />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
       {/* Header Ends */}
@@ -175,7 +193,11 @@ function Home() {
             </View>
 
             <View style={{ marginLeft: wd * 0.09 }}>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  setModalVisible(true);
+                }}
+              >
                 <View style={styles.icon}>
                   <View
                     style={{
@@ -332,7 +354,16 @@ function Home() {
                       color="#1FAF9E"
                     />
                   </View>
-
+                  <View
+                    style={{
+                      backgroundColor: "#673CB8",
+                      position: "absolute",
+                      width: wd * 0.051,
+                      height: ht * 0.007,
+                      alignSelf: "center",
+                      top: ht * 0.035,
+                    }}
+                  ></View>
                   <View style={{ marginLeft: wd * 0.023 }}>
                     <Text style={{ fontSize: ht * 0.016 }}>Book a</Text>
                     <Text style={{ fontSize: ht * 0.016 }}>cylinder</Text>
@@ -448,6 +479,88 @@ function Home() {
           </View>
         </View>
         {/* Quick Links Ends */}
+   
+          <Modal
+            animationType="slide"
+            onDismiss={() => {
+              console.log("dismissed");
+            }}
+            transparent={false}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+            }}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Select Account</Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                  }}
+                >
+                  <View style={{ alignSelf: "flex-start" }}>
+                    <Image
+                      style={{
+                        width: wd * 0.1,
+                        height: ht * 0.05,
+                        borderRadius: ht * 0.04,
+                      }}
+                      source={require("../assets/sbi.png")}
+                    />
+                  </View>
+                  <View style={{ marginLeft: wd * 0.03 }}>
+                    <Text>******7040</Text>
+                    <Text style={{ color: "grey" }}>State Bank of India</Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: "grey",
+                    width: wd * 0.48,
+                    height: ht * 0.001,
+                    alignSelf: "flex-end",
+                    marginBottom: ht * 0.02,
+                    marginTop: ht * 0.02,
+                    paddingRight: 0,
+                  }}
+                ></View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                  }}
+                >
+                  <View style={{ alignSelf: "flex-start" }}>
+                    <Image
+                      style={{
+                        width: wd * 0.1,
+                        height: ht * 0.05,
+                        borderRadius: ht * 0.04,
+                      }}
+                      source={require("../assets/phonepe.png")}
+                    />
+                  </View>
+                  <View style={{ marginLeft: wd * 0.03, alignSelf: "center" }}>
+                    <Text>PhonePe Wallet</Text>
+                  </View>
+                  <View style={{ marginLeft: wd * 0.15 }}>
+                    <TouchableOpacity
+                      style={{
+                        ...styles.openButton,
+                        backgroundColor: "#2196F3",
+                      }}
+                      onPress={() => {
+                        setModalVisible(!modalVisible);
+                      }}
+                    >
+                      <Text style={styles.textStyle}>Ok</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </Modal>
+     
         {/* View All Offers Starts */}
         <View style={styles.offersView}>
           <View
@@ -493,6 +606,31 @@ function Home() {
                     color="white"
                   />
                 </View>
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    position: "absolute",
+                    width: wd * 0.04,
+                    height: ht * 0.02,
+                    alignSelf: "center",
+                    top: ht * 0.02,
+                    left: wd * 0.046,
+                    borderRadius: ht * 0.04,
+                  }}
+                ></View>
+                <View
+                  style={{
+                    position: "absolute",
+                    width: wd * 0.04,
+                    height: ht * 0.02,
+                    alignSelf: "center",
+                    top: ht * 0.022,
+                    left: wd * 0.059,
+                    borderRadius: ht * 0.04,
+                  }}
+                >
+                  <FontAwesome name="rupee" size={12} color="#1FAF9E" />
+                </View>
               </View>
               <View>
                 <Text>Refer & Earn</Text>
@@ -528,6 +666,29 @@ function Home() {
               <TouchableOpacity>
                 <View style={{ alignSelf: "center" }}>
                   <AntDesign name="mobile1" size={40} color="#673CB8" />
+                  <View
+                    style={{
+                      backgroundColor: "#1FAF9E",
+                      position: "absolute",
+                      width: wd * 0.054,
+                      height: ht * 0.0395,
+                      alignSelf: "center",
+                      top: ht * 0.0065,
+                    }}
+                  ></View>
+                  <View
+                    style={{
+                      position: "absolute",
+                      left: wd * 0.04,
+                      top: ht * 0.008,
+                    }}
+                  >
+                    <Ionicons
+                      name="md-battery-charging"
+                      size={24}
+                      color="white"
+                    />
+                  </View>
                 </View>
                 <View style={{ marginTop: ht * 0.007 }}>
                   <Text style={{ textAlign: "center", fontSize: ht * 0.016 }}>
@@ -548,6 +709,31 @@ function Home() {
                     color="#1FAF9E"
                   />
                 </View>
+                <View
+                  style={{
+                    backgroundColor: "#673CB8",
+                    position: "absolute",
+                    width: wd * 0.01,
+                    height: ht * 0.014,
+                    alignSelf: "center",
+                    top: ht * 0.052,
+                    left: wd * 0.012,
+                  }}
+                ></View>
+                <View
+                  style={{
+                    backgroundColor: "#673CB8",
+                    // backgroundColor: "red",
+                    position: "absolute",
+                    width: wd * 0.03,
+                    height: ht * 0.003,
+                    alignSelf: "center",
+                    top: ht * 0.063,
+                    left: wd * 0.003,
+                    borderTopLeftRadius: ht * 0.1,
+                    borderTopRightRadius: ht * 0.01,
+                  }}
+                ></View>
                 <View style={{ marginTop: ht * 0.007 }}>
                   <Text style={{ fontSize: ht * 0.016 }}>DTH</Text>
                 </View>
@@ -564,6 +750,16 @@ function Home() {
                     color="#1FAF9E"
                   />
                 </View>
+                <View
+                  style={{
+                    backgroundColor: "#673CB8",
+                    position: "absolute",
+                    width: wd * 0.03,
+                    height: ht * 0.006,
+                    alignSelf: "center",
+                    top: ht * 0.042,
+                  }}
+                ></View>
                 <View style={{ marginTop: ht * 0.007 }}>
                   <Text style={{ fontSize: ht * 0.016 }}>Electricity</Text>
                 </View>
@@ -581,6 +777,16 @@ function Home() {
                     color="#1FAF9E"
                   />
                 </View>
+                <View
+                  style={{
+                    backgroundColor: "#673CB8",
+                    position: "absolute",
+                    width: wd * 0.144,
+                    height: ht * 0.015,
+                    alignSelf: "center",
+                    top: ht * 0.015,
+                  }}
+                ></View>
                 <View style={{ marginTop: ht * 0.007 }}>
                   <Text style={{ fontSize: ht * 0.016 }}>Credit Card</Text>
                   <Text style={{ textAlign: "center", fontSize: ht * 0.016 }}>
@@ -608,12 +814,22 @@ function Home() {
                 </View>
                 <View
                   style={{
+                    backgroundColor: "#1FAF9E",
+                    position: "absolute",
+                    width: wd * 0.054,
+                    height: ht * 0.0395,
+                    alignSelf: "center",
+                    top: ht * 0.0067,
+                  }}
+                ></View>
+                <View
+                  style={{
                     alignSelf: "center",
                     position: "absolute",
                     top: ht * 0.009,
                   }}
                 >
-                  <FontAwesome name="rupee" size={24} color="#1FAF9E" />
+                  <FontAwesome name="rupee" size={24} color="white" />
                 </View>
                 <View style={{ marginTop: ht * 0.007 }}>
                   <Text style={{ fontSize: ht * 0.016 }}>PostPaid</Text>
@@ -649,6 +865,18 @@ function Home() {
             {/*Third Element Starts */}
             <View>
               <TouchableOpacity>
+                <View
+                  style={{
+                    backgroundColor: "#673CB8",
+                    position: "absolute",
+                    width: wd * 0.13,
+                    height: ht * 0.04,
+                    alignSelf: "center",
+                    top: ht * 0.01,
+                    left: wd * 0.016,
+                    borderRadius: ht * 0.04,
+                  }}
+                ></View>
                 <View style={{ alignSelf: "center" }}>
                   <FontAwesome5
                     name="money-bill-alt"
@@ -669,12 +897,13 @@ function Home() {
             <View>
               <TouchableOpacity>
                 <View style={{ alignSelf: "center" }}>
-                  <Entypo name="circle" size={40} color="#673CB8" />
+                  {/* <Entypo name="circle" size={40} color="#673CB8" /> */}
+                  <FontAwesome name="circle-thin" size={40} color="#673CB8" />
                   <View
                     style={{
                       position: "absolute",
-                      top: ht * 0.006,
-                      left: wd * 0.011,
+                      top: ht * 0.004,
+                      left: wd * 0.004,
                     }}
                   >
                     <MaterialIcons
@@ -818,7 +1047,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#673CB8",
     width: wd * 0.14,
     height: ht * 0.0685,
-    borderRadius: ht * 0.09,
+    borderRadius: ht * 0.3,
     justifyContent: "center",
     alignContent: "center",
   },
@@ -901,5 +1130,40 @@ const styles = StyleSheet.create({
     marginBottom: ht * 0.0375,
     flexDirection: "row",
     justifyContent: "space-around",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "black",
+    opacity: 0.85,
+  },
+  modalView: {
+    opacity: 1,
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: ht * 0.02,
+    padding: 35,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    width: wd * 0.8,
+    height: ht * 0.3,
+  },
+  openButton: {
+    backgroundColor: "#F194FF",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    alignSelf: "flex-end",
+  },
+  modalText: {
+    marginBottom: 15,
+    fontSize: ht * 0.023,
   },
 });
