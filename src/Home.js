@@ -415,15 +415,15 @@ function Home() {
                       style={{
                         postion: "relative",
                         top: ht * 0.0265,
-                        left: wd * 0.0075,
+                        left: wd * 0.01,
                       }}
                     >
-                      <Feather name="circle" size={45} color="black" />
+                      <FontAwesome name="circle-thin" size={50} color="black" />
                     </View>
                     <View
                       style={{
                         postion: "absolute",
-                        bottom: ht * 0.033,
+                        bottom: ht * 0.037,
                         left: wd * 0.026,
                         elevation: 10,
                       }}
